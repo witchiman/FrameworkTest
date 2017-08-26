@@ -1,9 +1,20 @@
-import org.springframework.context.annotation.ComponentScan;
+import model.CdNumOne;
+import model.CompacDisc;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import service.CDPlayer;
+import service.MediaPlayer;
 
 @Configuration
-@ComponentScan(basePackages = {"model","service"})  //默认是扫描与配置类在相同包下面的类，当然，你也可以自定义扫描一个或多个包路径
-//@ComponentScan(basePackageClasses = {CdNumOne.class}) //或者可以直接指定扫描特定类或接口
 public class CDPlayerConfig {
 
+    @Bean                               //相当于在xml中添加<bean id="CdNumOne" class="model.CdNumOne"/>
+    public CompacDisc compacDisc() {    //如果要指定类名,@Bean后面加上类似(name="MyName")这样的属性即可。
+        return new CdNumOne();
+    }
+
+    @Bean
+    public MediaPlayer mediaPlayer(CompacDisc compacDisc) {
+        return new CDPlayer(compacDisc);
+    }
 }
