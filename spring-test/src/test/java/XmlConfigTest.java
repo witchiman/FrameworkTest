@@ -1,7 +1,5 @@
-import model.CompacDisc;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.StandardOutputStreamLog;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,30 +8,27 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import service.MediaPlayer;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = CDPlayerConfig.class)
-public class CDPlayerTest {
+@ContextConfiguration("classpath:player.xml")
+public class XmlConfigTest {
 
     @Rule
     public final SystemOutRule log = new SystemOutRule().mute().enableLog();
+
     @Autowired
     private MediaPlayer player;
 
-    @Autowired
-    private CompacDisc cd;
-
-    @Test
-    public void cdShouldNotBeNull() {
-        assertNotNull(cd);
-    }
 
     @Test
     public void play() {
         player.play();
         assertEquals(
-                "LiuDefu sings Love you for ever\n",
+                "Playing This is a collection of songs from web by singers\n" +
+                        "-Track: There's a bird fly ya\n" +
+                        "-Track: Just do it\n" +
+                        "-Track: Just fix it\n" +
+                        "-Track: hahaha\n",
                  log.getLog());
     }
 }
